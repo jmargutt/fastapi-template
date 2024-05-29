@@ -19,7 +19,7 @@ Template repo for FastAPI. Includes CI/CD on Azure Web App using Github Actions.
 
 ### Deploy to Azure with GitHub Actions
 
-2. Create a new App Service Plan in Azure, or choose a pre-existing one.
+1. Create a new App Service Plan in Azure, or choose a pre-existing one.
 2. Create a new Web App in Azure:
    * choose a meaningful name, e.g. `fastapi-template-jacopo`
    * select `Publish`: `Docker Container`
@@ -50,7 +50,7 @@ Template repo for FastAPI. Includes CI/CD on Azure Web App using Github Actions.
 > These `Application settings` determine which environment variables are accessible by the web app. 
 > If you change/add environment variables in the GitHub repository, don't forget to update the Web App `Configuration` in the Azure portal.
 
-4. Create the GitHub secrets and variables, so that GitHub Actions can deploy to Azure
+8. Create the GitHub secrets and variables, so that GitHub Actions can deploy to Azure
    * Go to your GitHub repository
    * Go to `Settings` -> `Secrets and variables` -> `Actions` -> `New repository secret`
    * Add the following **repository secrets**:
