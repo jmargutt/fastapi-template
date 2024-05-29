@@ -63,24 +63,24 @@ class MyPayload(BaseModel):
 
 
 @app.post("/post-something")
-async def post_something(payload: MyPayload, dependencies=Depends(required_headers)):
-    """POST Something."""
+async def post_something_for_sanne(payload: MyPayload, dependencies=Depends(required_headers)):
+    """POST Something. This method is meant for you to send the data of the registration in this format, so that it will be stored in the database. """
     
     # do something with input_data
-    new_string = payload.text_field = str(payload.integer_field)
+    new_string = payload.text_field + " Wessel is here " + str(payload.integer_field)
     
     return JSONResponse(status_code=200, content={"message": "Success", "new_string": new_string})
 
 
 @app.get("/get-something")
-async def kobo_to_121(request: Request, api_key: str = Depends(key_query_scheme)):
+async def get_something(id: int, api_key: str = Depends(key_query_scheme)):
     """GET Something."""
-
+    
     # check API key
     if api_key != os.environ["API_KEY"]:
         raise HTTPException(status_code=401, detail="Unauthorized")
 
-    return JSONResponse(status_code=200, content={"data": "blablabla"})
+    return JSONResponse(status_code=200, content={"message": f"this is the data of registration {id}"})
 
 
 if __name__ == "__main__":
