@@ -12,8 +12,9 @@ Template repo for FastAPI. Includes CI/CD on Azure Web App using Github Actions.
 > This file will not be pushed to the repository, as it is listed in the `.gitignore` file, so your credentials 
 > won't be exposed.
 4. add needed packages to `pyproject.toml`
-5. run `poetry install` to install the packages
-6. run `uvicorn main:app --reload` to start the server
+5. run `pip install poetry` to install poetry
+5. run `poetry install` to install the packages (or `python -m poetry install`, if `poetry` command is not found)
+6. run `poetry run uvicorn main:app --reload` to start the server  (or `python -m poetry run uvicorn main:app --reload`, if `poetry` command is not found)
 7. go to `http://127.0.0.1:8000/docs` and test if the app runs as expected.
 
 ### Deploy to Azure with GitHub Actions
@@ -26,6 +27,13 @@ Template repo for FastAPI. Includes CI/CD on Azure Web App using Github Actions.
    * select `Region`: `West Europe`
    * select the App Service Plan you created in step 1
    * Create the Web App
+3. Enable basic authentication
+   * Go to the Web App in the Azure portal
+   * Under `Settings`, select `Configuration` -> `General settings` -> `Platform settings`
+   * Set `SCM Basic Auth Publishing Credentials` to `On`
+   * Set `FTP Basic Auth Publishing Credentials` to `On`
+   * Save the changes
+   * Go back to the `Overview` and click `Restart`
 3. Get a Web App Publish Profile, to deploy from GitHub
    * Go to your app service in the Azure portal. 
    * On the Overview page, select `Download publish profile`. 
@@ -38,7 +46,6 @@ Template repo for FastAPI. Includes CI/CD on Azure Web App using Github Actions.
      * `DOCKER_REGISTRY_SERVER_URL`: the URL of the Azure Container Registry, e.g. `fastapiregister.azurecr.io`
      * `DOCKER_REGISTRY_SERVER_USERNAME`: the username of the Azure Container Registry, e.g. `fastapiregister`
      * `DOCKER_REGISTRY_SERVER_PASSWORD`: the password of the Azure Container Registry
-     * `WEBSITES_PORT`: 8000
 > [!IMPORTANT]  
 > These `Application settings` determine which environment variables are accessible by the web app. 
 > If you change/add environment variables in the GitHub repository, don't forget to update the Web App `Configuration` in the Azure portal.
