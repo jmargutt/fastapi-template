@@ -2,20 +2,26 @@
 
 Template repo for FastAPI. Includes CI/CD on Azure Web App using Github Actions. Uses [Poetry](https://python-poetry.org/) for dependency management.
 
-### Setup
+### Setup and run locally
 
-1. run `git clone https://github.com/jmargutt/fastapi-template.git`
-2. change code as needed
-3. add needed environment variables to `.env` file
+1. Clone the repo: `git clone https://github.com/jmargutt/fastapi-template.git`.
+2. Change code as needed.
+3. Add needed environment variables to `.env` file.
 > [!WARNING]  
 > Do not store credentials/passswords/keys in the code, use the `.env` file instead.
 > This file will not be pushed to the repository, as it is listed in the `.gitignore` file, so your credentials 
 > won't be exposed.
-4. add needed packages to `pyproject.toml`
-5. run `pip install poetry` to install poetry
-5. run `poetry install` to install the packages (or `python -m poetry install`, if `poetry` command is not found)
-6. run `poetry run uvicorn main:app --reload` to start the server  (or `python -m poetry run uvicorn main:app --reload`, if `poetry` command is not found)
-7. go to `http://127.0.0.1:8000/docs` and test if the app runs as expected.
+4. Add needed packages to `pyproject.toml`, under `[tool.poetry.dependencies]`.
+5. Run `pip install poetry` to install poetry.
+5. Run `poetry install` to install the packages (or `python -m poetry install`, if `poetry` command is not found).
+6. Run `poetry run uvicorn main:app --reload` to start the server  (or `python -m poetry run uvicorn main:app --reload`, if `poetry` command is not found)
+7. Go to `http://127.0.0.1:8000/docs` and test if the app runs as expected.
+
+### Development Tips
+1. Use a linter to check the code for errors and style issues (usually already built-in in your IDE of choice).
+2. Use a formatter (I like [Black](https://marketplace.visualstudio.com/items?itemName=ms-python.black-formatter)) to automatically format the code.
+3. Add [tests for your endpoints](https://fastapi.tiangolo.com/tutorial/testing/). Use a dedicated directory (`/tests`).
+4. Don't cram everything into the `main.py` file! Use separate files and directory for routers, models, etc. This will make your code more understandable and maintainable. See e.g. [kobo-connect](https://github.com/rodekruis/kobo-connect).
 
 ### Deploy to Azure with GitHub Actions
 
@@ -63,14 +69,5 @@ Template repo for FastAPI. Includes CI/CD on Azure Web App using Github Actions.
 5. Push a change to the repository to trigger the GitHub Actions workflow.
 4. Wait 5-10 minutes, then go to `<my-api-name>.azurewebsites.net` and see the app running.
 5. If the app is not running
-   * go to the `Actions` tab in your GitHub repository and check the logs of the failed workflow.
-   * go to the `Overview` tab of your Web App in the Azure portal and check `Deployment logs` -> `Logs`.
-
-### Run locally
-
-```
-cp example.env .env
-pip install poetry
-poetry install
-uvicorn main:app --reload
-```
+   * Go to the `Actions` tab in your GitHub repository and check the logs of the failed workflow.
+   * Go to the `Overview` tab of your Web App in the Azure portal and check `Deployment logs` -> `Logs`.

@@ -7,6 +7,7 @@ from pydantic import BaseModel
 import os
 import logging
 import sys
+
 logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
 handler = logging.StreamHandler(sys.stdout)
@@ -19,6 +20,7 @@ logging.getLogger("urllib3").setLevel(logging.WARNING)
 logging.getLogger("azure").setLevel(logging.WARNING)
 logging.getLogger("requests_oauthlib").setLevel(logging.WARNING)
 from dotenv import load_dotenv
+
 load_dotenv()
 
 # load environment variables
@@ -44,9 +46,7 @@ def some_function():
     """some function that does something."""
 
 
-def required_headers(
-        username: str = Header(),
-        password: str = Header()):
+def required_headers(username: str = Header(), password: str = Header()):
     """Headers required to use the API."""
     return username, password
 
@@ -54,33 +54,41 @@ def required_headers(
 @app.get("/", include_in_schema=False)
 async def docs_redirect():
     """Redirect base URL to docs."""
-    return RedirectResponse(url='/docs')
+    return RedirectResponse(url="/docs")
 
 
 class MyPayload(BaseModel):
-    text_field: str
-    integer_field: int | None = None
+    """Payload for /post-something endpoint."""
+
+    text_field: str  # a text field that is required
+    integer_field: int | None = None  # an integer field that is optional
 
 
 @app.post("/post-something")
-async def post_something_for_sanne(payload: MyPayload, dependencies=Depends(required_headers)):
-    """POST Something. This method is meant for you to send the data of the registration in this format, so that it will be stored in the database. """
-    
+async def post_something_for_sanne(
+    payload: MyPayload, dependencies=Depends(required_headers)
+):
+    """POST Something. This is a test endpoint."""
+
     # do something with input_data
     new_string = payload.text_field + " Wessel is here " + str(payload.integer_field)
-    
-    return JSONResponse(status_code=200, content={"message": "Success", "new_string": new_string})
+
+    return JSONResponse(
+        status_code=200, content={"message": "Success", "new_string": new_string}
+    )
 
 
 @app.get("/get-something")
 async def get_something(id: int, api_key: str = Depends(key_query_scheme)):
-    """GET Something."""
-    
+    """GET Something. This is a test endpoint."""
+
     # check API key
     if api_key != os.environ["API_KEY"]:
         raise HTTPException(status_code=401, detail="Unauthorized")
 
-    return JSONResponse(status_code=200, content={"message": f"this is the data of registration {id}"})
+    return JSONResponse(
+        status_code=200, content={"message": f"this is the data of registration {id}"}
+    )
 
 
 if __name__ == "__main__":
