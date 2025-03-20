@@ -48,13 +48,13 @@ Template repo for FastAPI. Includes CI/CD on Azure Web App using Github Actions.
    * Go to the registry -> `Access keys` -> Enable `Admin user` -> Copy the username and password
 3. Give permissions to the Web App to access the Container Registry
    * Go to your app service in the Azure portal.
-   * Under `Configuration`, update the `Application settings`:
+   * Under `Environment variables`, update the variables
      * `DOCKER_REGISTRY_SERVER_URL`: the URL of the Azure Container Registry, e.g. `fastapiregister.azurecr.io`
      * `DOCKER_REGISTRY_SERVER_USERNAME`: the username of the Azure Container Registry, e.g. `fastapiregister`
      * `DOCKER_REGISTRY_SERVER_PASSWORD`: the password of the Azure Container Registry
 > [!IMPORTANT]  
-> These `Application settings` determine which environment variables are accessible by the web app. 
-> If you change/add environment variables in the GitHub repository, don't forget to update the Web App `Configuration` in the Azure portal.
+> These `Environment variables` determine which environment variables are accessible by the web app. 
+> If you change/add environment variables locally, don't forget to update `Environment variables` in the Azure portal.
 
 8. Create the GitHub secrets and variables, so that GitHub Actions can deploy to Azure
    * Go to your GitHub repository
